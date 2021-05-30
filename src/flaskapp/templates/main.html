@@ -1,42 +1,95 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://127.0.0.1:8887/js/main.js"></script> 
+
+<script type="text/javascript" src="http://127.0.0.1:8887/js/main.js"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="container">
-    <table id="myTable" class=" table order-list">
-    <thead>
-        <tr>
-            <td>gooly boogly</td>
-            <td>Gmail</td>
-            <td>Phone</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="col-sm-4">
-                <input type="text" name="name" class="form-control" />
-            </td>
-            <td class="col-sm-4">
-                <input type="mail" name="mail"  class="form-control"/>
-            </td>
-            <td class="col-sm-3">
-                <input type="text" name="phone"  class="form-control"/>
-            </td>
-            <td class="col-sm-2"><a class="deleteRow"></a>
+<style>
+      input{
+        margin: auto; 
+        /*setting margin to auto of the cheeckbox*/
+        display: flex;/*Flex box property*/
+      }
+      .form-check-input{
+        background-color:#098043;
+        color:#fff;
+        margin: auto;
+      }
+      hr.solid {
+        border-top: 2px solid #999;
+      }
+    .form-check-inline{
+        display: inline-flex;
+        align-items: center;
+        padding-left: 0;
+        }
+</style>
 
-            </td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="5" style="text-align: left;">
-                <input type="button" class="btn btn-lg btn-block " id="addrow" value="Add Row" />
-            </td>
-        </tr>
-        <tr>
-        </tr>
-    </tfoot>
-</table>
+
+
+
+<div class="jumbotron text-center">
+    <h1>Recipe Generator</h1>
+    <p>Enter a title or at least one ingredient to generate a recipe</p> 
+  </div>
+    
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- TITLE INPUT -->
+        <h3>Your Input</h3>
+        <div class="form-group">
+            <label for="title_entry">Recipe Title</label>
+            <input type="email" class="form-control" id="title_entry" aria-describedby="title_help" placeholder="e.g. Whole Wheat Brownies">
+        </div>
+        <!-- INGREDIENT LIST -->
+        <div class="container-fluid">
+            <table id="ingredient_list_table" class=" table order-list">
+            <thead>
+                <tr>
+                    <td>Contains Quantity?</td>
+                    <td>Ingredient</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-sm-1">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="qty_check_0" onclick="setCheckboxClicked(this.id)" style="width: 30px; height: 30px; margin: auto;" title="Does this ingredient have an associated quantity? (e.g. 2 Cups of water)">
+                        </div>
+                    </td>
+                    <td class="col-sm-11">
+                        <input type="ingredient_text" name="ingredient_text" id="ingredient_text_0" class="form-control" onfocusout="onFocusOutIngredientList(this.id)" placeholder="e.g. 2 Cups of Water. Quantities may be omitted">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <hr class="solid">
+        <div class="container-fluid">
+            <div class="col-sm-6">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" checked value="" id="addtl_ingr_check" style="width: 30px; height: 30px; margin-right: 3%" title="Allow model to add ingredients to ones you've already added? (Note: Model may decide to add ingredients anyway 🙃)">
+                    <label class="form-check-label" for="addtl_ingr_check">Allow Additional Ingredients?</label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-primary pull-right btn-lg" onclick="generateRecipe()">Generate Recipe!</button>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h3>Generated Ingredients</h3>
+        <p>(These will only be different than your input, if you didn't provide quantities)</p>
+        <input class='form-control' type="input-group input-group-lg" disabled value="{{ ingredient_str }}"/>
+      </div>
+      <div class="col-md-3">
+        <h3>Generated Instructions</h3>        
+        <input class='form-control' type="input-group input-group-lg" disabled value="{{ instructions_str }}"/>
+      </div>
 </div>
