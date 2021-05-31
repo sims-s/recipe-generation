@@ -1,13 +1,8 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
 <script type="text/javascript" src="http://127.0.0.1:8887/js/main.js"></script>
-
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
-<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <style>
       input{
@@ -28,8 +23,23 @@
         align-items: center;
         padding-left: 0;
         }
+    .ingr-counter{
+      text-align: right;
+      font-size: larger;
+    }
+    .form-check-inline{
+        display: inline-flex;
+        align-items: center;
+        padding-left: 0;
+      }
+    .tall-text-box{
+      height: 100px;
+    }
 </style>
 
+<head>
+  <link rel="shortcut icon" href="#">
+</head>
 
 
 
@@ -45,26 +55,26 @@
         <h3>Your Input</h3>
         <div class="form-group">
             <label for="title_entry">Recipe Title</label>
-            <input type="email" class="form-control" id="title_entry" aria-describedby="title_help" placeholder="e.g. Whole Wheat Brownies">
+            <input type="email" class="form-control" id="title_entry" aria-describedby="title_help" placeholder="e.g. Whole Wheat Brownies" autofocus>
         </div>
         <!-- INGREDIENT LIST -->
         <div class="container-fluid">
             <table id="ingredient_list_table" class=" table order-list">
             <thead>
                 <tr>
-                    <td>Contains Quantity?</td>
+                  <td>Contains Quantity?</td>
                     <td>Ingredient</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td class="col-sm-1">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="qty_check_0" onclick="setCheckboxClicked(this.id)" style="width: 30px; height: 30px; margin: auto;" title="Does this ingredient have an associated quantity? (e.g. 2 Cups of water)">
-                        </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="qty_check_0" onclick="setCheckboxClicked(this.id)" style="width: 30px; height: 30px; margin: auto;" title="Does this ingredient have an associated quantity? (e.g. 2 Cups of water)">
+                      </div>
                     </td>
                     <td class="col-sm-11">
-                        <input type="ingredient_text" name="ingredient_text" id="ingredient_text_0" class="form-control" onfocusout="onFocusOutIngredientList(this.id)" placeholder="e.g. 2 Cups of Water. Quantities may be omitted">
+                        <input type="ingredient_text" name="ingredient_text" id="ingredient_text_0" class="form-control" onfocusout="onFocusOutIngredientList(this.id)" placeholder="e.g. 2 Cups of Water. Quantities are useful, use them if you have them!">
                     </td>
                 </tr>
             </tbody>
@@ -79,17 +89,21 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <button type="button" class="btn btn-primary pull-right btn-lg" onclick="generateRecipe()">Generate Recipe!</button>
+                <button type="button" class="btn btn-primary pull-right btn-lg" id="generate_recipe_button" onclick="generateRecipe()">
+                  <span class="spinner-border spinner-border-lg " role="status" aria-hidden="true" hidden id="button_spinner"></span>
+                  Generate Recipe!
+                </button>
             </div>
         </div>
       </div>
       <div class="col-md-3">
-        <h3>Generated Ingredients</h3>
-        <p>(These will only be different than your input, if you didn't provide quantities)</p>
-        <input class='form-control' type="input-group input-group-lg" disabled value="{{ ingredient_str }}"/>
+        <h3>Generated Ingredients*</h3>
+        <textarea class="form-control" rows="20" readonly id="generated_ingredient_list" style="font-size: 22px;">{{ ingredient_str }}</textarea>
+        <p>*These will be the same as your input if all if your input has quantities and you do not allow for additional ingredients.</p>
       </div>
       <div class="col-md-3">
-        <h3>Generated Instructions</h3>        
-        <input class='form-control' type="input-group input-group-lg" disabled value="{{ instructions_str }}"/>
+        <h3>Generated Instructions</h3>
+        <p></p>      
+        <textarea class="form-control" rows="20" readonly id="generated_instructions" style="font-size: 22px;">{{ instructions_str }}</textarea>
       </div>
 </div>

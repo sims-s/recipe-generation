@@ -1,0 +1,26 @@
+{
+    "per_device_train_batch_size" : 2,
+    "per_device_eval_batch_size" : 4,
+    "gradient_accumulation_steps" : 16,
+
+    "model_name_or_path" : "gpt2",
+
+    "train_file" : "train_txt.csv",
+    "validation_file" : "test_txt.csv",
+
+    "output_dir" : "outputs/",
+    "should_log" : true,
+    "preprocessing_num_workers" : 4,
+
+    "evaluation_strategy" : "steps",
+    "eval_steps" : 250,
+    "save_strategy" : "steps",
+    "save_steps" : 250,
+    "save_total_limit" : 4,
+    "logging_steps" : 250,
+
+    "num_train_epochs" : 5,
+
+    "do_train" : true,
+    "do_eval" : true
+}

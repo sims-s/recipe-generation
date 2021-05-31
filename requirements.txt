@@ -1,0 +1,8 @@
+datasets
+numpy
+pandas
+-e git+https://github.com/huggingface/transformers.git@8d171628fe84bdf92ee40b5375d7265278180f14
+tqdm
+matplotlib
+torch
+parsimonious
